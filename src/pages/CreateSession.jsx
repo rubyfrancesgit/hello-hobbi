@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 // firebase
-import { doc, getDoc, addDoc, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, addDoc, collection, getDocs, query, where, setDoc } from "firebase/firestore";
 import { db } from "../config/FirebaseConfig";
 
 // style
@@ -13,6 +13,14 @@ import '../sass/style.scss';
 function CreateSession() {
     const hostDetails = document.getElementById('hostDetails');
     const sessionDetails = document.getElementById('sessionDetails');
+
+    const [docID, setDocID] = useState('');
+    const [docUniqueID, setDocUniqueID] = useState('');
+
+    // add session photos
+    const addPhotoTwo = document.getElementById("addPhotoTwo");
+    const addPhotoThree = document.getElementById("addPhotoThree");
+    const addPhotoFour = document.getElementById("addPhotoFour");
 
     // host details
     const [firstName, setFirstName] = useState('');
@@ -37,6 +45,11 @@ function CreateSession() {
     const [sessionPrice, setSessionPrice] = useState('');
     const [extraGuestPrice, setExtraGuestPrice] = useState('');
     const [noOfParticipants, setNoOfParticipants] = useState('');
+
+    const [sessionPhotoOne, setSessionPhotoOne] = useState(null);
+    const [sessionPhotoTwo, setSessionPhotoTwo] = useState(null);
+    const [sessionPhotoThree, setSessionPhotoThree] = useState(null);
+    const [sessionPhotoFour, setSessionPhotoFour] = useState(null);
 
     let uniqueID;
 
@@ -78,14 +91,72 @@ function CreateSession() {
         }
     }
 
+    // showing hidden photo upload buttons
+    const addPhotoTwoShow = () => {
+        const addPhotoTwoDiv = document.getElementById("addPhotoTwoDiv");
+        addPhotoTwoDiv.classList.remove("hide");
+    }
+    if(addPhotoTwo){
+        addPhotoTwo.addEventListener('click', addPhotoTwoShow);
+    }
+
+    const addPhotoThreeShow = () => {
+        const addPhotoThreeDiv = document.getElementById("addPhotoThreeDiv");
+        addPhotoThreeDiv.classList.remove("hide");
+    }
+    if(addPhotoThree){
+        addPhotoThree.addEventListener('click', addPhotoThreeShow);
+    }
+
+    const addPhotoFourShow = () => {
+        const addPhotoFourDiv = document.getElementById("addPhotoFourDiv");
+        addPhotoFourDiv.classList.remove("hide");
+    }
+    if(addPhotoFour){
+        addPhotoFour.addEventListener('click', addPhotoFourShow);
+    }
+    
+
+    // session photo upload
+    const photoOneFileChange = (e) => {
+        console.log("photo one");
+        setSessionPhotoOne(e.target.files[0]);
+
+        if (setSessionPhotoOne !== null) {
+            console.log(sessionPhotoOne);
+        }
+    }
+
+    const photoTwoFileChange = (e) => {
+        console.log("photo two");
+        setSessionPhotoTwo(e.target.files[0]);
+
+        if (setSessionPhotoTwo !== null) {
+            console.log(sessionPhotoTwo);
+        }
+    }
+
+    const photoThreeFileChange = (e) => {
+        console.log("photo three");
+        // setSessionPhotoThree(e.target.files[0]);
+
+        // if (setSessionPhotoThree !== null) {
+        //     console.log(sessionPhotoThree);
+        // }
+    }
+
+    const photoFourFileChange = (e) => {
+        console.log("photo four");
+        // setSessionPhotoFour(e.target.files[0]);
+
+        // if (setSessionPhotoFour !== null) {
+        //     console.log(sessionPhotoFour);
+        // }
+    }
+
+
     const handleHostDetailsSubmit = async (e) => {
         e.preventDefault();
-
-        
-        
-        console.log(uniqueID);
-        console.log(uniqueID);
-        console.log(uniqueID);
 
         hostDetails.classList.add("hide");
         sessionDetails.classList.remove("hide");
@@ -147,35 +218,25 @@ function CreateSession() {
     const submitHost = async (firstName, lastName, email, bio, birthday, age, uniqueID) => {
         const hostCollectionRef = collection(db, "hostDetails");
 
-        console.log(uniqueID);
-        console.log(uniqueID);
-        console.log(uniqueID);
-
         await addDoc(hostCollectionRef, {firstName, lastName, email, bio, birthday, age, uniqueID: uniqueID});
 
         const colRef = collection(db, 'hostDetails');
-        getDocs(colRef)
-            .then((snapshot) => {
-                let uniqueIDs = []
-                let docIDs = []
-                snapshot.docs.forEach((doc) => {
-                    uniqueIDs.push({ ...doc.data(), uniqueID: doc.uniqueID });
+        const queryUniqueID = query(colRef, where("uniqueID", "==", uniqueID));
+        
+        const querySnapshot = await getDocs(queryUniqueID);
+        querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data().uniqueID);
+        setDocID(doc.id);
+        setDocUniqueID(doc.data().uniqueID);
+});
 
-                    docIDs.push({ ...doc.id })
-                })
-                console.log(uniqueIDs);
-                console.log(docIDs);
-            })
-
-        // const docRef = doc(db, "hostDetails", "uniqueID");
-        // const docSnap = await getDoc(docRef);
-        // console.log("Document data:", docSnap.data());
     }
 
     const submitSession = (sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice) => {
         const sessionCollectionRef = collection(db, "HobbiSessions");
 
-        addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice});
+        addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice, uniqueID: docUniqueID});
     }
 
     return (
@@ -331,9 +392,27 @@ function CreateSession() {
                     <div className="session-details__photo-upload-container">
                         <p className="session-details__regular-p">Session images</p>
 
-                        <input className="session-details__img-upload-btn create-session__img-upload-btn-one" id="sessionPicOne" type="file" accept="image/jpg, image/png,image/jpeg" />
+                        <div className="session-details__add-photo">
+                            <input className="session-details__img-upload-btn create-session__img-upload-btn-one" id="sessionPicOne" type="file" accept="image/jpg, image/png,image/jpeg" onChange={photoOneFileChange} />
 
-                        <input className="session-details__img-upload-btn" id="sessionPicTwo" type="file" accept="image/jpg, image/png,image/jpeg" />
+                            <button id="addPhotoTwo"> + another photo </button>
+                        </div>
+
+                        <div className="session-details__add-photo hide" id="addPhotoTwoDiv">
+                            <input className="session-details__img-upload-btn create-session__img-upload-btn-one" id="sessionPicTwo" type="file" accept="image/jpg, image/png,image/jpeg" onChange={photoTwoFileChange} />
+
+                            <button id="addPhotoThree"> + another photo </button>
+                        </div>
+
+                        <div className="session-details__add-photo hide" id="addPhotoThreeDiv">
+                            <input className="session-details__img-upload-btn create-session__img-upload-btn-one" id="sessionPicThree" type="file" accept="image/jpg, image/png,image/jpeg" onChange={photoThreeFileChange} />
+
+                            <button id="addPhotoFour"> + another photo </button>
+                        </div>
+
+                        <div className="session-details__add-photo hide" id="addPhotoFourDiv">
+                            <input className="session-details__img-upload-btn create-session__img-upload-btn-one" id="sessionPicFour" type="file" accept="image/jpg, image/png,image/jpeg" onChange={photoFourFileChange} />
+                        </div>
                     </div>
 
                     <div className="session-details__photo-display-container hide">
