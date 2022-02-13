@@ -1,0 +1,54 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+html{
+    font-size: 65.5%;
+}
+
+a:link{
+    text-decoration: none;
+    color: unset;
+}
+
+a:visited{
+    text-decoration: none;
+    color: unset;
+}
+
+a{
+    cursor: pointer;
+    text-align: center;
+}
+
+input {
+    text-align: center;
+}
+
+input:focus{
+    border: none !important;
+}
+
+input::placeholder:focus {
+    color: transparent !important;
+}
+  
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+:-moz-placeholder {
+    text-align: center;
+}
+
+li {
+    list-style: none;
+    cursor: pointer;
+}
+
+.hide {
+    display: none !important;
+}

@@ -1,0 +1,17 @@
+.small-top-nav {
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5rem;
+
+    &__heading {
+        @include p-text;
+        font-size: 3rem;
+    }
+
+    &__hobbi-heading {
+        font-family: $logo-font;
+    }
+}

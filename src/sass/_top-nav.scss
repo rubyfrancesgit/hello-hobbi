@@ -1,0 +1,44 @@
+@import 'variables';
+@import 'mixins';
+
+.top-nav {
+    width: 100vw;
+    height: 22vh;
+    background: white;
+    border-bottom: 2px solid black;
+    @include center;
+    flex-direction: column;
+    position: relative;
+
+    &__menu {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 3rem;
+    }
+
+    &__h1-hello {
+        font-family: $text-font;
+        font-size: 6rem;
+        font-weight: lighter;position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    &__h1-hobbi {
+        font-family: $logo-font;
+        letter-spacing: .2rem;
+    }
+
+    &__about {
+        @include p-text;
+        cursor: pointer;
+    }
+
+    &__teach-hobby-btn {
+        @include yellow-btn;
+        margin-left: 3rem;
+    }
+}

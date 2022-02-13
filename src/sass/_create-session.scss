@@ -1,0 +1,360 @@
+.yellow-banner {
+    width: 100vw;
+    height: 10vh;
+    @include center;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    background-color: #FFFACB;
+
+    &__h1 {
+        font-family: $logo-font;
+        font-size: 2.5rem;
+        letter-spacing: .1rem;
+    }
+}
+
+.host-details {
+    width: 100vw;
+    @include center;
+    flex-direction: column;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+
+    &__heading {
+        @include p-text;
+        font-size: 2.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    &__form {
+        width: 40rem;
+        @include center-column;
+        justify-content: space-evenly;
+    }
+
+    &__p {
+        @include p-text;
+        padding-bottom: 1rem;
+    }
+
+    &__regular-p {
+        @include p-text;
+        font-weight: normal;
+        padding-bottom: 1rem;
+    }
+
+    &__form-div {
+        width: 100%;
+        @include button-beginnings;
+        padding: 0px;
+    }
+
+    &__name-div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between
+    }
+
+    &__name-input {
+        @include input;
+        width: 49%;
+        margin-bottom: 2.5rem;
+    }
+
+    &__name-input::placeholder {
+        text-align: left;
+        color: black;
+    }
+
+    &__name-input:focus::placeholder {
+        color: transparent;
+    }
+
+    &__name-input:focus {
+        text-align: left;
+    }
+
+    &__input {
+        @include input;
+        width: 100%;
+        margin-bottom: 2.5rem;
+    }
+
+    &__input::placeholder {
+        text-align: left;
+        color: black;
+    }
+
+    &__input:focus::placeholder {
+        color: transparent;
+    }
+
+    &__input:focus {
+        text-align: left;
+    }
+
+    &__text-area {
+        @include text-area;
+        width: 100%;
+        margin-bottom: 2.5rem;
+    }
+
+    &__text-area::placeholder {
+        @include p-text;
+        color: black;
+        text-align: left;
+    }
+
+    &__birthday-div {
+        width: 100%;
+        margin-bottom: .5rem;
+    }
+
+    &__profile-picture-container {
+        width: 100%;
+        margin-bottom: 2.5rem;
+    }
+
+    &__profile-picture-div {
+        display: flex;
+        align-items: center;
+        background-color: $light-mist;
+        border-radius: 4px;
+        padding: 12px;
+    }
+
+    &__profile-blank-img {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 360px;
+        background-color: rgb(201, 201, 201);
+        // background: #FFCBFD;
+        // background: -webkit-linear-gradient(to bottom right, #FFCBFD 0%, #B8FFF6 100%);
+        // background: -moz-linear-gradient(to bottom right, #FFCBFD 0%, #B8FFF6 100%);
+        // background: linear-gradient(to bottom right, #FFCBFD 0%, #B8FFF6 100%);
+        // border: 1px solid black;
+    }
+
+    &__profile-picture-text {
+        width: 70%;
+        @include center-column;
+    }
+
+    &__profile-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 360px;
+        object-fit: cover;
+        margin-right: 2rem;
+        // border: 1px solid black;
+    }
+
+    &__hidden-file-upload-btn {
+        display: none;
+    }
+
+    &__visible-file-upload-btn {
+        width: 15rem;
+        @include button-beginnings;
+        @include p-text;
+        border: none;
+    }
+
+    &__datepicker {
+        width: 48%;
+        text-align: left;
+        @include p-text;
+        color: #8A8A8A;
+    }
+
+    &__continue-btn {
+        @include yellow-btn;
+    }
+}
+
+.session-details {
+    width: 100vw;
+    @include center-column;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+
+    &__h2 {
+        @include p-text;
+        font-size: 2.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    &__form-container {
+        width: 30%;
+        min-width: 35rem;
+        @include center-column;
+    }
+
+    &__name-city-div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3rem
+    }
+
+    &__input {
+        @include input;
+    }
+
+    &__input::placeholder {
+        text-align: left;
+        color: black;
+    }
+
+    &__input:focus::placeholder {
+        color: transparent;
+    }
+
+    &__input:focus {
+        text-align: left;
+    }
+
+    &__form-div {
+        width: 100%;
+        margin-bottom: 3rem;
+        padding: 0px;
+    }
+
+    &__p {
+        @include p-text;
+        padding-bottom: 1rem;
+        padding-bottom: 0px;
+    }
+
+    &__regular-p {
+        @include p-text;
+        font-weight: normal;
+        padding-bottom: 1rem;
+    }
+
+    &__text-area {
+        @include text-area;
+    }
+
+    &__text-area::placeholder {
+        @include p-text;
+        color: black;
+        text-align: left;
+    }
+
+    &__select-div {
+        padding-bottom: 1rem;
+    }
+
+    &__checkbox-input {
+        margin-right: 1rem;
+    }
+
+    &__extra-learner-div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-bottom: 3.5rem
+    }
+
+    &__participant-no-div {
+        width: 100%;
+        margin-bottom: 3.5rem
+    }
+
+    &__participant-no {
+        @include p-text;
+        padding: 6px;
+        background: $light-mist;
+        border: none;
+        border-radius: 4px;
+    }
+
+    &__pricing-container {
+        width: 100%;
+        margin-bottom: 3rem
+    }
+
+    &__pricing-div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__pricing-input-div {
+        display: flex;
+        width: 48%;
+        background: $light-mist;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 12px;
+        border-radius: 4px;
+        margin-bottom: 3rem
+    }
+
+    &__number-input {
+        @include p-text;
+        background: $light-mist;
+        border: none;
+        width: 2.5rem;
+        margin-right: 1rem;
+    }
+
+    &__number-input:focus {
+        text-align: left;
+    }
+
+    &__radio-div {
+        padding-bottom: 1rem;
+    }
+
+    &__radio-input {
+        margin-right: 1rem;
+    }
+
+    &__photo-upload-container {
+        width: 100%;
+        margin-bottom: 3.5rem
+    }
+
+    &__img-upload-btn::-webkit-file-upload-button {
+        @include button-beginnings;
+        @include p-text;
+        border: none;
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        margin-right: 1rem;
+    }
+
+    &__img-upload-btn-one {
+        margin-bottom: 1rem;
+    }
+
+    &__photo-display-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3.5rem
+    }
+
+    &__photo-display {
+        width: 48%;
+        height: 10rem;
+    }
+
+    &__final-text {
+        text-align: center;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+
+    &__btn {
+        @include yellow-btn;
+        // font-family: $text-font !important;
+        // color: white !important;
+        margin-top: 2rem;
+        margin-bottom: 5rem;
+    }
+}
