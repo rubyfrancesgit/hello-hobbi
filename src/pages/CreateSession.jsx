@@ -5,10 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 
 // firebase
 import { doc, getDoc, addDoc, collection, getDocs, query, where, setDoc } from "firebase/firestore";
-import { db } from "../config/FirebaseConfig";
+import { db, storage } from "../config/FirebaseConfig";
 
 // style
 import '../sass/style.scss';
+import { ref, uploadBytesResumable } from 'firebase/storage';
 
 function CreateSession() {
     const hostDetails = document.getElementById('hostDetails');
@@ -17,7 +18,11 @@ function CreateSession() {
     const [docID, setDocID] = useState('');
     const [docUniqueID, setDocUniqueID] = useState('');
 
-    // add session photos
+    const errorDiv = document.getElementById("errorDiv");
+    const errorDivBackground = document.getElementById("errorDivBackground");
+    const [errorMessage, setErrorMessage] = useState('');
+
+    // show add another photo
     const addPhotoTwo = document.getElementById("addPhotoTwo");
     const addPhotoThree = document.getElementById("addPhotoThree");
     const addPhotoFour = document.getElementById("addPhotoFour");
@@ -27,7 +32,7 @@ function CreateSession() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [bio, setBio] = useState('');
-    const [thumbnail, setThumbnail] = useState(null);
+    // const [thumbnail, setThumbnail] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
     const [age, setAge] = useState(null);
     const [birthday, setBirthday] = useState(null);
@@ -46,13 +51,19 @@ function CreateSession() {
     const [extraGuestPrice, setExtraGuestPrice] = useState('');
     const [noOfParticipants, setNoOfParticipants] = useState('');
 
+    // set session photos
     const [sessionPhotoOne, setSessionPhotoOne] = useState(null);
     const [sessionPhotoTwo, setSessionPhotoTwo] = useState(null);
     const [sessionPhotoThree, setSessionPhotoThree] = useState(null);
     const [sessionPhotoFour, setSessionPhotoFour] = useState(null);
 
-    let uniqueID;
+    function closeErrorModal() {
+        errorDiv.classList.add("hide");
+        errorDivBackground.classList.add("hide");
+    }
 
+    // create unique ID for users so user data and session data can be matched up later on
+    let uniqueID;
         function makeID() {
             var result           = '';
             var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -74,7 +85,7 @@ function CreateSession() {
         // sets image useState to the image uploaded by user
         if (e.target.files[0]) {
             setProfilePicture(e.target.files[0]);
-            setThumbnail(e.target.files[0]);
+            // setThumbnail(e.target.files[0]);
           }
 
         const displayProfilePicture = document.getElementById("displayProfilePicture");
@@ -120,46 +131,27 @@ function CreateSession() {
     // session photo upload
     const photoOneFileChange = (e) => {
         console.log("photo one");
-        setSessionPhotoOne(e.target.files[0]);
-
-        if (setSessionPhotoOne !== null) {
-            console.log(sessionPhotoOne);
-        }
+        setSessionPhotoOne(e.target.files[0]); 
     }
 
     const photoTwoFileChange = (e) => {
         console.log("photo two");
         setSessionPhotoTwo(e.target.files[0]);
-
-        if (setSessionPhotoTwo !== null) {
-            console.log(sessionPhotoTwo);
-        }
     }
 
     const photoThreeFileChange = (e) => {
         console.log("photo three");
-        // setSessionPhotoThree(e.target.files[0]);
-
-        // if (setSessionPhotoThree !== null) {
-        //     console.log(sessionPhotoThree);
-        // }
+        setSessionPhotoThree(e.target.files[0]);
     }
 
     const photoFourFileChange = (e) => {
         console.log("photo four");
-        // setSessionPhotoFour(e.target.files[0]);
-
-        // if (setSessionPhotoFour !== null) {
-        //     console.log(sessionPhotoFour);
-        // }
+        setSessionPhotoFour(e.target.files[0]);
     }
 
 
     const handleHostDetailsSubmit = async (e) => {
         e.preventDefault();
-
-        hostDetails.classList.add("hide");
-        sessionDetails.classList.remove("hide");
 
         let msDay = 1000 * 3600 * 24;
 
@@ -174,25 +166,27 @@ function CreateSession() {
 
         setBirthday(document.getElementById("birthDate").value);
 
-        submitHost(firstName, lastName, email, bio, birthday, age, uniqueID);
+        if(ageMath < 18) {
+            console.log("Too young to join")
+            errorDiv.classList.remove("hide");
+            errorDivBackground.classList.remove("hide");
+            setErrorMessage("You must be 18 years or older to join!");
+        } 
 
-        // if(ageMath < 18) {
-        //     console.log("Too young to join")
-        // } 
+        else if ( (email !== "") && (profilePicture !== null) && (firstName !== "") && (lastName !== "") && (birthDate !== "") && (ageMath >= 18) ) {
+            console.log("signup complete :)");
 
-        // else if ( (email !== "") && (thumbnail !== undefined) && (firstName !== "") && (lastName !== "") && (birthDate !== "") && (ageMath >= 18) ) {
-        //     console.log("signup complete :)");
-
-        //     console.log(email, thumbnail, firstName, lastName, birthDate, ageMath);
-
-        //     hostDetails.classList.add("hide");
-        //     sessionDetails.classList.remove("hide");
-
-        // } 
+            hostDetails.classList.add("hide");
+            sessionDetails.classList.remove("hide");
+            submitHost();
+        } 
         
-        // else {
-        //     console.log("please fill in all fields");
-        // }
+        else {
+            console.log("please fill in all fields");
+            errorDiv.classList.remove("hide");
+            errorDivBackground.classList.remove("hide");
+            setErrorMessage("Please fill in all fields!");
+        }
     }
 
     // session details
@@ -212,10 +206,43 @@ function CreateSession() {
     const handleSessionDetailsSubmit = async (e) => {
         e.preventDefault();
 
-        submitSession(sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice);
+        if( (sessionName !== "") && (city !== "") && (lessonPlan !== "") && (whatsIncluded !== "") && (sessionPrice !== "") && ( (hostHouse !== false) || (learnersHouse !== false) || (publicSetting !== false) ) && (extraGuest !== "") && (sessionPhotoOne !== null) ) {
+            console.log("form almost filled");
+            if(extraGuest === "yesExtraGuest"){
+                if((extraGuestPrice !== "") && (noOfParticipants !== "")) {
+                    console.log("form complete");
+                    submitSession();
+                } else {
+                    console.log("form not complete");
+                    errorDiv.classList.remove("hide");
+                    errorDivBackground.classList.remove("hide");
+                    setErrorMessage("Please fill in extra guest information!");
+                }
+            }
+            
+            else if(extraGuest === "noExtraGuest"){
+                console.log("form complete");
+                submitSession();
+            }
+        } 
+        
+        else {
+            console.log("form not filled");
+            errorDiv.classList.remove("hide");
+            errorDivBackground.classList.remove("hide");
+            setErrorMessage("Please fill in all fields!");
+        }
     }
 
-    const submitHost = async (firstName, lastName, email, bio, birthday, age, uniqueID) => {
+    const submitHost = async () => {
+
+        // setting path to upload img to in firebase storage
+        const imgUploadPath = `/profilePhotos/${uniqueID}/${profilePicture.name}`;
+        // connecting the upload path the firebase storage (imported from config)
+        const imgStorageRef = ref(storage, imgUploadPath);
+        // uploading the image to storage - set storage, then item that is being stored
+        const imgUploadTask = uploadBytesResumable(imgStorageRef, profilePicture);
+
         const hostCollectionRef = collection(db, "hostDetails");
 
         await addDoc(hostCollectionRef, {firstName, lastName, email, bio, birthday, age, uniqueID: uniqueID});
@@ -233,7 +260,28 @@ function CreateSession() {
 
     }
 
-    const submitSession = (sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice) => {
+    const submitSession = () => {
+        console.log('session submit');
+
+        if(docUniqueID){
+            // setting path to upload img to in firebase storage
+            const imgOneUploadPath = `/sessionPhotos/${docUniqueID}/session-${sessionName}-${sessionPhotoOne.name}`;
+            // connecting the upload path the firebase storage (imported from config)
+            const imgOneStorageRef = ref(storage, imgOneUploadPath);
+            // uploading the image to storage - set storage, then item that is being stored
+            const imgOneUploadTask = uploadBytesResumable(imgOneStorageRef, sessionPhotoOne);
+
+            if(sessionPhotoTwo !== null){
+                // setting path to upload img to in firebase storage
+                const imgTwoUploadPath = `/sessionPhotos/${docUniqueID}/session-${sessionName}-${sessionPhotoTwo.name}`;
+                // connecting the upload path the firebase storage (imported from config)
+                const imgTwoStorageRef = ref(storage, imgTwoUploadPath);
+                // uploading the image to storage - set storage, then item that is being stored
+                const imgTwoUploadTask = uploadBytesResumable(imgTwoStorageRef, sessionPhotoTwo);
+            }
+        }
+        
+
         const sessionCollectionRef = collection(db, "HobbiSessions");
 
         addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice, uniqueID: docUniqueID});
@@ -423,6 +471,11 @@ function CreateSession() {
                     <button type="submit">Submit</button>
                 </form>
             </div>
+
+            <div className="error-div hide" id="errorDiv">
+                    <p className="error-div__p">{errorMessage}</p>
+                </div>
+            <div className="error-div-background hide" id="errorDivBackground" onClick={closeErrorModal}></div>
         </>
     )
 }
