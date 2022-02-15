@@ -14,4 +14,10 @@
     &__hobbi-heading {
         font-family: $logo-font;
     }
+
+    &__sign-out-btn {
+        @include button-beginnings;
+        width: 12rem;
+        background: $light-mist;
+    }
 }
