@@ -31,6 +31,7 @@ function CreateSession() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [bio, setBio] = useState('');
     // const [thumbnail, setThumbnail] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
@@ -170,7 +171,7 @@ function CreateSession() {
             console.log("Too young to join")
             errorDiv.classList.remove("hide");
             errorDivBackground.classList.remove("hide");
-            setErrorMessage("You must be 18 years or older to join!");
+            setErrorMessage("Sorry, you must be 18 years or older to join");
         } 
 
         else if ( (email !== "") && (profilePicture !== null) && (firstName !== "") && (lastName !== "") && (birthDate !== "") && (ageMath >= 18) ) {
@@ -288,7 +289,7 @@ function CreateSession() {
     }
 
     return (
-        <>
+        <div className="create-session-container">
             <SmallTopNav />
 
             <div className="yellow-banner">
@@ -309,20 +310,24 @@ function CreateSession() {
                             <div  className="host-details__profile-picture-text">
                                 <p className="host-details__p">Choose your profile picture</p>
 
-                                <input className="host-details__hidden-file-upload-btn" id="profilePictureUpload" type="file" accept="image/jpg, image/png,image/jpeg" onChange={handleProfileFileChange} />
+                                <input className="host-details__visible-file-upload-btn" id="profilePictureUpload" type="file" accept="image/jpg, image/png,image/jpeg" required onChange={handleProfileFileChange} />
 
-                                <input className="host-details__visible-file-upload-btn" type="button" value="Select picture" onClick={clickFileUpload} />
+                                {/* <input className="host-details__visible-file-upload-btn" type="button" value="Select picture" onClick={clickFileUpload} /> */}
                             </div>
                         </div>
                     </div>
 
                     <div className="host-details__name-div">
-                        <input className="host-details__name-input" id="firstName" type="text" placeholder="First name..." onChange={(e) => setFirstName(e.target.value)} />
+                        <input className="host-details__name-input" id="firstName" type="text" placeholder="First name..." required onChange={(e) => setFirstName(e.target.value)} />
 
-                        <input className="host-details__name-input" type="text" placeholder="Last name..." onChange={(e) => setLastName(e.target.value)} />
+                        <input className="host-details__name-input" type="text" placeholder="Last name..." required onChange={(e) => setLastName(e.target.value)} />
                     </div>
 
-                    <input className="host-details__input" type="email" id="emailSignUp" placeholder="Email..." onChange={(e) => setEmail(e.target.value)}></input>
+                    <div className="host-details__name-div">
+                        <input className="host-details__input host-details__email-input" type="email" id="emailSignUp" placeholder="Email..." required onChange={(e) => setEmail(e.target.value)}></input>
+
+                        <input className="host-details__input host-details__number-input" type="text" id="phoneSignUp" placeholder="Phone number..." onChange={(e) => setPhoneNumber(e.target.value)}></input>
+                    </div>
 
                     <div className="host-details__form-div">
                         <p className="host-details__regular-p">Bio</p>
@@ -352,18 +357,18 @@ function CreateSession() {
 
                 <form className="session-details__form" onSubmit={handleSessionDetailsSubmit}>
                     <div className="session-details__name-city-div">
-                        <input className="session-details__input" id="sessionName" type="text" placeholder="Session name..." autoComplete="off" onChange={(e) => setSessionName(e.target.value)} />
-                        <input className="session-details__input" id="sessionCity" type="text" placeholder="City..." autoComplete="off" onChange={(e) => setCity(e.target.value)} />
+                        <input className="session-details__input" id="sessionName" type="text" placeholder="Session name..." required autoComplete="off" onChange={(e) => setSessionName(e.target.value)} />
+                        <input className="session-details__input" id="sessionCity" type="text" placeholder="City..." required autoComplete="off" onChange={(e) => setCity(e.target.value)} />
                     </div>
 
                     <div className="session-details__form-div">
                         <p className="session-details__regular-p">Lesson plan</p>
-                        <textarea className="session-details__text-area" id="lessonPlan" placeholder="What you’re going to be doing during the session, length of session etc...." autoComplete="off" onChange={(e) => setLessonPlan(e.target.value)}></textarea>
+                        <textarea className="session-details__text-area" id="lessonPlan" placeholder="What you’re going to be doing during the session, length of session etc...." required autoComplete="off" onChange={(e) => setLessonPlan(e.target.value)}></textarea>
                     </div>
 
                     <div className="session-details__form-div">
                         <p className="session-details__regular-p">What's included</p>
-                        <textarea className="session-details__text-area" id="whatsIncluded" placeholder="The equipment and materials included..." autoComplete="off" onChange={(e) => setWhatsIncluded(e.target.value)} ></textarea>
+                        <textarea className="session-details__text-area" id="whatsIncluded" placeholder="The equipment and materials included..." required autoComplete="off" onChange={(e) => setWhatsIncluded(e.target.value)} ></textarea>
                     </div>
 
                     <div className="session-details__form-div">
@@ -425,7 +430,7 @@ function CreateSession() {
                         <div className="session-details__pricing-div">
                             <div className="session-details__pricing-input-div">
                                 <p className="session-details__p">$</p>
-                                <input className="session-details__number-input" id="sessionPrice" type="text" onChange={(e) => setSessionPrice(e.target.value)} />
+                                <input className="session-details__number-input" id="sessionPrice" type="text" required onChange={(e) => setSessionPrice(e.target.value)} />
                                 <p className="session-details__p">per session</p>
                             </div>
 
@@ -441,7 +446,7 @@ function CreateSession() {
                         <p className="session-details__regular-p">Session images</p>
 
                         <div className="session-details__add-photo">
-                            <input className="session-details__img-upload-btn create-session__img-upload-btn-one" id="sessionPicOne" type="file" accept="image/jpg, image/png,image/jpeg" onChange={photoOneFileChange} />
+                            <input className="session-details__img-upload-btn create-session__img-upload-btn-one" id="sessionPicOne" type="file" accept="image/jpg, image/png,image/jpeg" required onChange={photoOneFileChange} />
 
                             <button id="addPhotoTwo"> + another photo </button>
                         </div>
@@ -473,10 +478,10 @@ function CreateSession() {
             </div>
 
             <div className="error-div hide" id="errorDiv">
-                    <p className="error-div__p">{errorMessage}</p>
-                </div>
+                <p className="error-div__p">{errorMessage}</p>
+            </div>
             <div className="error-div-background hide" id="errorDivBackground" onClick={closeErrorModal}></div>
-        </>
+        </div>
     )
 }
 
