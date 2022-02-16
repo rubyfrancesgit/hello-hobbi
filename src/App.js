@@ -19,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
               <Route path="/host-a-session" element={<HostSession />} />
-              <Route path="/sign-up" element={ <SignUp /> } />
+              <Route path="/sign-up" element={ !user? <SignUp /> : <Home /> } />
               <Route path="/create-session" element={ user ? <CreateSession /> : <Home /> } />
           </Routes>
         </BrowserRouter>

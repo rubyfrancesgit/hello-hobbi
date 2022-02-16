@@ -305,7 +305,7 @@ function CreateSession() {
                         <div className="session-details__photo-display" id="photoDisplayTwo"></div>
                     </div>
 
-                    <button type="submit">Submit</button>
+                    <button className="session-details__submit" type="submit">Submit</button>
                 </form>
             </div>
 

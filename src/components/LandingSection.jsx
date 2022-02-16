@@ -39,7 +39,7 @@ function LandingSection() {
                         <p className="landing-page__p">Get access to equipment & materials</p>
                     </div>
                     <div className="landing-page__bottom-right">
-                        <img src={star} alt="star icon" />
+                        <img className="landing-page__star-icon" src={star} alt="star icon" />
                     </div>
                 </div>
             </div>

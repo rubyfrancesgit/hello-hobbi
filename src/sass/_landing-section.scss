@@ -55,13 +55,6 @@
         padding: 2rem;
     }
 
-    // &__top-left:hover {
-    //     background: #DFCBFF;
-    //     // background: -webkit-linear-gradient(to bottom right, #DFCBFF 0%, #FFFACB 100%);
-    //     // background: -moz-linear-gradient(to bottom right, #DFCBFF 0%, #FFFACB 100%);
-    //     // background: linear-gradient(to bottom right, #DFCBFF 0%, #FFFACB 100%);
-    // }
-
     &__top-right {
         width: 50%;
         height: 100%;
@@ -72,13 +65,6 @@
         padding: 2rem;
     }
 
-    // &__top-right:hover {
-    //     background: #9EEADC;
-    //     // background: -webkit-linear-gradient(to bottom right, #B8FFCC 0%, #DFCBFF 100%);
-    //     // background: -moz-linear-gradient(to bottom right, #B8FFCC 0%, #DFCBFF 100%);
-    //     // background: linear-gradient(to bottom right, #B8FFCC 0%, #DFCBFF 100%);
-    // }
-
     &__bottom-left {
         width: 50%;
         height: 100%;
@@ -88,13 +74,6 @@
         border-top: 1px solid black;
         padding: 2rem;
     }
-
-    // &__bottom-left:hover {
-    //     background: #FFE3B8;
-    //         // background: -webkit-linear-gradient(to bottom right, #FFE3B8 0%, #B8FFF6 100%);
-    //         // background: -moz-linear-gradient(to bottom right, #FFE3B8 0%, #B8FFF6 100%);
-    //         // background: linear-gradient(to bottom right, #FFE3B8 0%, #B8FFF6 100%);
-    // }
 
     &__bottom-right {
         width: 50%;
@@ -107,8 +86,40 @@
         background: -moz-linear-gradient(to bottom right, #FFE3B8 0%, #FFCBEA 100%);
         background: linear-gradient(to bottom right, #FFE3B8 0%, #FFCBEA 100%);
     }
+}
 
-    // &__bottom-right:hover {
-    //     background: white;
-    // }
+@media only screen and (max-width: 600px){
+    .landing-page {
+        flex-wrap: wrap;
+
+        &__p {
+            font-size: 1.2rem;
+        }
+
+        &__left {
+            width: 100%;
+            height: 40%;
+            border-right: none;
+            border-bottom: 1px solid black;
+        }
+
+        &__right {
+            width: 100%;
+            height: 60%;
+            border-left: none;
+            border-top: 1px solid black;
+        }
+
+        &__big-text {
+            font-size: 2.7rem;
+        }
+
+        &__icon {
+            width: 4rem;
+        }
+
+        &__star-icon {
+            width: 8rem;
+        }
+    }
 }

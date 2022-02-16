@@ -14,10 +14,14 @@
     &__hobbi-heading {
         font-family: $logo-font;
     }
+}
 
-    &__sign-out-btn {
-        @include button-beginnings;
-        width: 12rem;
-        background: $light-mist;
+@media only screen and (max-width: 600px){
+    .small-top-nav {
+        padding-left: 3rem;
+        
+        &__heading {
+            font-size: 2.5rem;
+        }
     }
 }

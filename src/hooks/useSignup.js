@@ -4,8 +4,12 @@ import { auth, db, storage } from "../config/FirebaseConfig";
 import { useAuthContext } from "./useAuthContext";
 import { ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export const useSignup = () => {
+
+    let navigate = useNavigate();
+
     const [isCancelled, setIsCancelled] = useState(false);
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
@@ -44,6 +48,9 @@ export const useSignup = () => {
 
                         await addDoc(userCollectionRef, {firstName: displayName, lastName, email, bio, birthday, age: ageMath, userID, signedUp: todaysDate});
                     })
+                        .then(() => {
+                            navigate("/");
+                        })
                 
             })
             .catch((err) => {

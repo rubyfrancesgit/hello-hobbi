@@ -10,168 +10,7 @@
         font-family: $logo-font;
         font-size: 2.5rem;
         letter-spacing: .1rem;
-    }
-}
-
-.host-details {
-    width: 100vw;
-    @include center;
-    flex-direction: column;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-
-    &__heading {
-        @include p-text;
-        font-size: 2.5rem;
-        margin-bottom: 2.5rem;
-    }
-
-    &__form {
-        width: 40rem;
-        @include center-column;
-        justify-content: space-evenly;
-    }
-
-    &__p {
-        @include p-text;
-        padding-bottom: 1rem;
-    }
-
-    &__regular-p {
-        @include p-text;
-        font-weight: normal;
-        padding-bottom: 1rem;
-    }
-
-    &__form-div {
-        width: 100%;
-        @include button-beginnings;
-        padding: 0px;
-    }
-
-    &__name-div {
-        width: 100%;
-        display: flex;
-        justify-content: space-between
-    }
-
-    &__name-input {
-        @include input;
-        width: 49%;
-        margin-bottom: 2.5rem;
-    }
-
-    &__name-input::placeholder {
-        text-align: left;
-        color: black;
-    }
-
-    &__name-input:focus::placeholder {
-        color: transparent;
-    }
-
-    &__name-input:focus {
-        text-align: left;
-    }
-
-    &__input {
-        @include input;
-        width: 100%;
-        margin-bottom: 2.5rem;
-    }
-
-    &__input::placeholder {
-        text-align: left;
-        color: black;
-    }
-
-    &__input:focus::placeholder {
-        color: transparent;
-    }
-
-    &__input:focus {
-        text-align: left;
-    }
-
-    &__email-input {
-        width: 54%;
-    }
-
-    &__number-input {
-        width: 44%;
-    }
-
-    &__text-area {
-        @include text-area;
-        width: 100%;
-        margin-bottom: 2.5rem;
-    }
-
-    &__text-area::placeholder {
-        @include p-text;
-        color: black;
-        text-align: left;
-    }
-
-    &__birthday-div {
-        width: 100%;
-        margin-bottom: .5rem;
-    }
-
-    &__profile-picture-container {
-        width: 100%;
-        margin-bottom: 2.5rem;
-    }
-
-    &__profile-picture-div {
-        display: flex;
-        align-items: center;
-        background-color: $light-mist;
-        border-radius: 4px;
-        padding: 12px;
-    }
-
-    &__profile-blank-img {
-        width: 8rem;
-        height: 8rem;
-        border-radius: 360px;
-        background-color: rgb(201, 201, 201);
-    }
-
-    &__profile-picture-text {
-        width: 70%;
-        @include center-column;
-    }
-
-    &__profile-img {
-        width: 100%;
-        height: 100%;
-        border-radius: 360px;
-        object-fit: cover;
-        margin-right: 2rem;
-        // border: 1px solid black;
-    }
-
-    &__hidden-file-upload-btn {
-        // display: none;
-    }
-
-    &__visible-file-upload-btn {
-        width: 15rem;
-        @include button-beginnings;
-        @include p-text;
-        border: none;
-    }
-
-    &__datepicker {
-        width: 48%;
-        text-align: left;
-        @include p-text;
-        color: #8A8A8A;
-    }
-
-    &__continue-btn {
-        @include yellow-btn;
+        margin-bottom: 0px;
     }
 }
 
@@ -357,7 +196,7 @@
         padding-bottom: 3rem;
     }
 
-    &__btn {
+    &__submit {
         @include yellow-btn;
         // font-family: $text-font !important;
         // color: white !important;
@@ -395,4 +234,50 @@
     left: 50%;
     transform: translate(-50%,-50%);
     background: rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 600px){
+    .yellow-banner {
+        
+        &__h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .session-details {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+
+        &__form {
+            width: 32rem;
+        }
+
+        &__p {
+            font-size: 1.2rem;
+        }
+
+        &__regular-p {
+            font-size: 1.2rem;
+        }
+
+        &__input {
+            font-size: 1.2rem;
+        }
+
+        &__name-input {
+            font-size: 1.2rem;
+        }
+
+        &__visible-file-upload-btn {
+            font-size: 1.2rem;
+        }
+
+        &__text-area::placeholder {
+            font-size: 1.2rem;
+        }
+
+        &__submit {
+            font-size: 1.2rem;
+        }
+    }
 }

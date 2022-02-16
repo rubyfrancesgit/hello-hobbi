@@ -27,7 +27,7 @@ function SignUp() {
     const errorDivBackground = document.getElementById("errorDivBackground");
     const [errorMessage, setErrorMessage] = useState('');
 
-    // host details
+    // user details
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -79,7 +79,7 @@ function SignUp() {
         }
     }
 
-    const handleHostDetailsSubmit = async (e) => {
+    const handleUserDetailsSubmit = async (e) => {
         e.preventDefault();
 
         let msDay = 1000 * 3600 * 24;
@@ -106,8 +106,6 @@ function SignUp() {
             console.log("signup complete :)");
 
             await signup(email, password, firstName, profilePicture, lastName, bio, birthDate, ageMath, uniqueID);
-
-            // submitHost(ageMath);
         } 
         
         else {
@@ -118,7 +116,7 @@ function SignUp() {
         }
     }
 
-    const submitHost = async (ageMath) => {
+    const submitUser = async (ageMath) => {
 
         // setting path to upload img to in firebase storage
         const imgUploadPath = `/profilePhotos/${uniqueID}/${profilePicture.name}`;
@@ -151,47 +149,43 @@ function SignUp() {
                 <h1 className="yellow-banner__h1">Sign up</h1>
             </div>
 
-            <div className="host-details" id="hostDetails">
-                {/* <h2 className="host-details__heading">Sign up</h2> */}
+            <div className="user-details">
+                <form className="user-details__form" onSubmit={handleUserDetailsSubmit}>
 
-                <form className="host-details__form" onSubmit={handleHostDetailsSubmit}>
-
-                    <div className="host-details__profile-picture-container">
-                        <div className="host-details__profile-picture-div">
-                            <div className="host-details__profile-blank-img" id="blankImgDiv">
-                                <img className="host-details__profile-img hide" id="displayProfilePicture" alt="user profile picture" />
+                    <div className="user-details__profile-picture-container">
+                        <div className="user-details__profile-picture-div">
+                            <div className="user-details__profile-blank-img" id="blankImgDiv">
+                                <img className="user-details__profile-img hide" id="displayProfilePicture" alt="user profile picture" />
                             </div>
 
-                            <div  className="host-details__profile-picture-text">
-                                <p className="host-details__p">Choose your profile picture</p>
+                            <div  className="user-details__profile-picture-text">
+                                <p className="user-details__p">Choose your profile picture</p>
 
-                                <input className="host-details__visible-file-upload-btn" id="profilePictureUpload" type="file" accept="image/jpg, image/png,image/jpeg" required onChange={handleProfileFileChange} />
-
-                                {/* <input className="host-details__visible-file-upload-btn" type="button" value="Select picture" onClick={clickFileUpload} /> */}
+                                <input className="user-details__visible-file-upload-btn" id="profilePictureUpload" type="file" accept="image/jpg, image/png,image/jpeg" required onChange={handleProfileFileChange} />
                             </div>
                         </div>
                     </div>
 
-                    <div className="host-details__name-div">
-                        <input className="host-details__name-input" id="firstName" type="text" placeholder="First name..." required onChange={(e) => setFirstName(e.target.value)} />
+                    <div className="user-details__name-div">
+                        <input className="user-details__name-input" id="firstName" type="text" placeholder="First name..." required onChange={(e) => setFirstName(e.target.value)} />
 
-                        <input className="host-details__name-input" type="text" placeholder="Last name..." required onChange={(e) => setLastName(e.target.value)} />
+                        <input className="user-details__name-input" type="text" placeholder="Last name..." required onChange={(e) => setLastName(e.target.value)} />
                     </div>
 
-                    <div className="host-details__name-div">
-                        <input className="host-details__input host-details__email-input" type="email" id="emailSignUp" placeholder="Email..." required onChange={(e) => setEmail(e.target.value)}></input>
+                    <div className="user-details__name-div">
+                        <input className="user-details__input user-details__email-input" type="email" id="emailSignUp" placeholder="Email..." required onChange={(e) => setEmail(e.target.value)}></input>
 
-                        <input className="host-details__input host-details__number-input" type="text" id="passwordSignUp" placeholder="Password..." onChange={(e) => setPassword(e.target.value)}></input>
+                        <input className="user-details__input user-details__number-input" type="password" id="passwordSignUp" placeholder="Password..." onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
 
-                    <div className="host-details__form-div">
-                        <p className="host-details__regular-p">Bio</p>
-                        <textarea className="host-details__text-area" id="userBio" placeholder="A little about yourself..." autoComplete="off" required onChange={(e) => setBio(e.target.value)} value={bio}  />
+                    <div className="user-details__form-div">
+                        <p className="user-details__regular-p">Bio</p>
+                        <textarea className="user-details__text-area" id="userBio" placeholder="A little about yourself..." autoComplete="off" required onChange={(e) => setBio(e.target.value)} value={bio}  />
                     </div>
 
-                    <div className="host-details__birthday-div">
-                        <p className="host-details__regular-p">Birthday</p>
-                        <DatePicker className="host-details__input host-details__datepicker" id="birthDate"
+                    <div className="user-details__birthday-div">
+                        <p className="user-details__regular-p">Birthday</p>
+                        <DatePicker className="user-details__input user-details__datepicker" id="birthDate"
                             selected={startDate}
                             onChange={(date) => setStartDate(date)}
                             showYearDropdown
@@ -202,7 +196,7 @@ function SignUp() {
                             maxDate={new Date()} />
                     </div>
 
-                    <button className="host-details__continue-btn" type="submit">Sign up</button>
+                    <button className="user-details__sign-up-btn" type="submit">Sign up</button>
                 </form>
             </div>
 

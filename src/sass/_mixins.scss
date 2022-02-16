@@ -26,10 +26,10 @@
 
 @mixin yellow-btn {
     @include p-text;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
     background: #FFFACB;
     border: 1px solid black;
     border-radius: 360px;
