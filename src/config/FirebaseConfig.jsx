@@ -4,12 +4,7 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCa9qQnqpmd6rLgaB2aFpwBB86blZFqY6Q",
-    authDomain: "hello-hobbi.firebaseapp.com",
-    projectId: "hello-hobbi",
-    storageBucket: "hello-hobbi.appspot.com",
-    messagingSenderId: "932015785484",
-    appId: "1:932015785484:web:87801811be082e1f549029"
+    
 };
 
 const app = initializeApp(firebaseConfig);
