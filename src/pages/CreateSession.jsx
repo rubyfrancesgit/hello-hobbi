@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import SmallTopNav from '../components/SmallTopNav';
+import MiniamlTopNav from '../components/MinimalTopNav';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { onAuthStateChanged } from "firebase/auth";
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 // firebase
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
@@ -10,7 +11,6 @@ import { auth, db, storage } from "../config/FirebaseConfig";
 
 // style
 import '../sass/style.scss';
-import { ref, uploadBytesResumable } from 'firebase/storage';
 
 function CreateSession() {
     const hostDetails = document.getElementById('hostDetails');
@@ -87,6 +87,7 @@ function CreateSession() {
     const photoOneFileChange = (e) => {
         console.log("photo one");
         setSessionPhotoOne(e.target.files[0]); 
+        // console.log(sessionPhotoOne);
     }
 
     const photoTwoFileChange = (e) => {
@@ -149,35 +150,90 @@ function CreateSession() {
         }
     }
 
-    const submitSession = () => {
+    const submitSession = async () => {
         console.log('session submit');
         console.log(userID);
 
-        // setting path to upload img to in firebase storage
-        const imgOneUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoOne.name}`;
-        // connecting the upload path the firebase storage (imported from config)
-        const imgOneStorageRef = ref(storage, imgOneUploadPath);
-        // uploading the image to storage - set storage, then item that is being stored
-        const imgOneUploadTask = uploadBytesResumable(imgOneStorageRef, sessionPhotoOne);
-
-        if(sessionPhotoTwo !== null){
+        if(sessionPhotoOne !== null && sessionPhotoTwo === null && sessionPhotoThree === null &&  sessionPhotoFour === null) {
             // setting path to upload img to in firebase storage
-            const imgTwoUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoTwo.name}`;
-            // connecting the upload path the firebase storage (imported from config)
-            const imgTwoStorageRef = ref(storage, imgTwoUploadPath);
+            const imgOneUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoOne.name}`;
             // uploading the image to storage - set storage, then item that is being stored
-            const imgTwoUploadTask = uploadBytesResumable(imgTwoStorageRef, sessionPhotoTwo);
+            const imgOneUploadTask = await uploadBytesResumable(ref(storage, imgOneUploadPath, sessionPhotoOne));
+            // get img URL
+            const img1URL = await getDownloadURL(imgOneUploadTask.ref);
+
+            const sessionCollectionRef = collection(db, "HobbiSessions");
+
+            addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice, userID, imgOneURL: img1URL, imgTwoURL: "", imgThreeURL: "", imgFourURL: ""});
+        } 
+        
+        else if(sessionPhotoOne !== null && sessionPhotoTwo !== null && sessionPhotoThree === null &&  sessionPhotoFour === null){
+            // IMG ONE
+            const imgOneUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoOne.name}`;
+            const imgOneUploadTask = await uploadBytesResumable(ref(storage, imgOneUploadPath, sessionPhotoOne));
+            const img1URL = await getDownloadURL(imgOneUploadTask.ref);
+
+            // IMG TWO
+            const imgTwoUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoTwo.name}`;
+            const imgTwoUploadTask = await uploadBytesResumable(ref(storage, imgTwoUploadPath, sessionPhotoTwo));
+            const img2URL = await getDownloadURL(imgTwoUploadTask.ref);
+
+            const sessionCollectionRef = collection(db, "HobbiSessions");
+
+            addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice, userID, imgOneURL: img1URL, imgTwoURL: img2URL, imgThreeURL: "", imgFourURL: ""});
         }
         
+        else if(sessionPhotoOne !== null && sessionPhotoTwo !== null && sessionPhotoThree !== null &&  sessionPhotoFour === null){
+            // IMG ONE
+            const imgOneUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoOne.name}`;
+            const imgOneUploadTask = await uploadBytesResumable(ref(storage, imgOneUploadPath, sessionPhotoOne));
+            const img1URL = await getDownloadURL(imgOneUploadTask.ref);
 
-        const sessionCollectionRef = collection(db, "HobbiSessions");
+            // IMG TWO
+            const imgTwoUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoTwo.name}`;
+            const imgTwoUploadTask = await uploadBytesResumable(ref(storage, imgTwoUploadPath, sessionPhotoTwo));
+            const img2URL = await getDownloadURL(imgTwoUploadTask.ref);
 
-        addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice, userID});
+            // IMG THREE
+            const imgThreeUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoThree.name}`;
+            const imgThreeUploadTask = await uploadBytesResumable(ref(storage, imgThreeUploadPath, sessionPhotoThree));
+            const img3URL = await getDownloadURL(imgThreeUploadTask.ref);
+
+            const sessionCollectionRef = collection(db, "HobbiSessions");
+
+            addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice, userID, imgOneURL: img1URL, imgTwoURL: img2URL, imgThreeURL: img3URL, imgFourURL: ""});
+        }
+
+        else if(sessionPhotoOne !== null && sessionPhotoTwo !== null && sessionPhotoThree !== null &&  sessionPhotoFour !== null){
+            // IMG ONE
+            const imgOneUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoOne.name}`;
+            const imgOneUploadTask = await uploadBytesResumable(ref(storage, imgOneUploadPath, sessionPhotoOne));
+            const img1URL = await getDownloadURL(imgOneUploadTask.ref);
+
+            // IMG TWO
+            const imgTwoUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoTwo.name}`;
+            const imgTwoUploadTask = await uploadBytesResumable(ref(storage, imgTwoUploadPath, sessionPhotoTwo));
+            const img2URL = await getDownloadURL(imgTwoUploadTask.ref);
+
+            // IMG THREE
+            const imgThreeUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoThree.name}`;
+            const imgThreeUploadTask = await uploadBytesResumable(ref(storage, imgThreeUploadPath, sessionPhotoThree));
+            const img3URL = await getDownloadURL(imgThreeUploadTask.ref);
+
+            // IMG FOUR
+            const imgFourUploadPath = `/sessionPhotos/${userID}/session-${sessionName}-${sessionPhotoFour.name}`;
+            const imgFourUploadTask = await uploadBytesResumable(ref(storage, imgFourUploadPath, sessionPhotoFour));
+            const img4URL = await getDownloadURL(imgFourUploadTask.ref);
+
+            const sessionCollectionRef = collection(db, "HobbiSessions");
+
+            addDoc(sessionCollectionRef, {sessionName, city, lessonPlan, whatsIncluded, hostHouse, learnersHouse, publicSetting, extraGuest, extraGuestPrice, sessionPrice, userID, imgOneURL: img1URL, imgTwoURL: img2URL, imgThreeURL: img3URL, imgFourURL: img4URL});
+        }
     }
 
     return (
         <div className="create-session-container">
-            <SmallTopNav />
+            <MiniamlTopNav />
 
             <div className="yellow-banner">
                 <h1 className="yellow-banner__h1">Create a session</h1>
@@ -187,7 +243,7 @@ function CreateSession() {
             <div className="session-details" id="sessionDetails">
                 <h2 className="session-details__h2">Session details</h2>
 
-                <form className="session-details__form" onSubmit={handleSessionDetailsSubmit}>
+                <div className="session-details__form" >
                     <div className="session-details__name-city-div">
                         <input className="session-details__input" id="sessionName" type="text" placeholder="Session name..." required autoComplete="off" onChange={(e) => setSessionName(e.target.value)} />
                         <input className="session-details__input" id="sessionCity" type="text" placeholder="City..." required autoComplete="off" onChange={(e) => setCity(e.target.value)} />
@@ -261,15 +317,15 @@ function CreateSession() {
                         <p className="session-details__regular-p">Session price</p>
                         <div className="session-details__pricing-div">
                             <div className="session-details__pricing-input-div">
-                                <p className="session-details__p">$</p>
+                                <p className="session-details__light-weight-p">$</p>
                                 <input className="session-details__number-input" id="sessionPrice" type="text" required onChange={(e) => setSessionPrice(e.target.value)} />
-                                <p className="session-details__p">per session</p>
+                                <p className="session-details__light-weight-p">per session</p>
                             </div>
 
                             <div className="session-details__pricing-input-div hide" id="extraGuestPriceDiv">
-                                <p className="session-details__p">$</p>
+                                <p className="session-details__light-weight-p">$</p>
                                 <input className="session-details__number-input" id="extraGuestPrice" type="text" onChange={(e) => setExtraGuestPrice(e.target.value)} />
-                                <p className="session-details__p">per extra guest</p>
+                                <p className="session-details__light-weight-p">per extra guest</p>
                             </div>
                         </div>
                     </div>
@@ -305,8 +361,8 @@ function CreateSession() {
                         <div className="session-details__photo-display" id="photoDisplayTwo"></div>
                     </div>
 
-                    <button className="session-details__submit" type="submit">Submit</button>
-                </form>
+                    <button className="session-details__submit" onClick={handleSessionDetailsSubmit}>Submit</button>
+                </div>
             </div>
 
             <div className="error-div hide" id="errorDiv">

@@ -79,11 +79,12 @@
         @include p-text;
         cursor: pointer !important;
         margin-bottom: 0px;
+        margin-left: 2rem;
     }
 
     &__teach-hobby-btn {
         @include yellow-btn;
-        margin-left: 3rem;
+        margin-left: 2rem;
     }
 }
 

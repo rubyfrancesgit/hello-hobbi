@@ -1,0 +1,26 @@
+.available-hobbies {
+    width: 100vw;
+
+    &__img {
+        width: 10rem;
+        height: 10rem;
+    }
+
+    // &__heading {
+    //     @include p-text;
+    //     font-size: 2.5rem;
+    // }
+
+    // &__container {
+    //     display: flex;
+    // }
+
+    // &__hobby-card {
+    //     width: 18rem;
+    //     margin: 1rem;
+    // }
+
+    // &__img {
+    //     width: 100%;
+    // }
+}

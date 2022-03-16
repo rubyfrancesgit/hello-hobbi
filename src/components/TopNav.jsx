@@ -61,14 +61,15 @@ function TopNav() {
                 {!user && (
                     <div className="top-nav__menu">
                         <p className="top-nav__login" onClick={handleShow}>Login</p>
-                        <Link to="/sign-up" className="top-nav__teach-hobby-btn">Sign up</Link>
+                        <Link to="/sign-up" className="top-nav__login">Sign up</Link>
+                        <Link to="/host-a-session" className="top-nav__teach-hobby-btn">Teach a hobby</Link>
                     </div>
                 )}
 
                 {user && (
                     <div className="top-nav__menu">
                         <p className="top-nav__sign-out" onClick={logout}>Sign out</p>
-                        <Link to="/create-session" className="top-nav__teach-hobby-btn">Teach a hobby</Link>
+                        <Link to="/host-a-session" className="top-nav__teach-hobby-btn">Teach a hobby</Link>
                     </div>
                 )}
             </div>

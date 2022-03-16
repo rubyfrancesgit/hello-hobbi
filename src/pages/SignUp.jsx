@@ -14,6 +14,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 // style
 import '../sass/style.scss'; 
 import { ref, uploadBytesResumable } from 'firebase/storage';
+import MiniamlTopNav from '../components/MinimalTopNav';
 
 function SignUp() {
 
@@ -143,7 +144,7 @@ function SignUp() {
 
     return (
         <div className="create-session-container">
-            <SmallTopNav />
+            <MiniamlTopNav />
 
             <div className="yellow-banner">
                 <h1 className="yellow-banner__h1">Sign up</h1>

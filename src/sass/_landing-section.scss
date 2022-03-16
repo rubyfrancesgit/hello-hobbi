@@ -2,6 +2,7 @@
     width: 100vw;
     height: 78vh;
     display: flex;
+    border-top: 2px solid black;
     border-bottom: 2px solid black;
 
     &__p {
@@ -23,6 +24,7 @@
 
     &__big-text {
         @include p-text;
+        font-weight: lighter;
         font-size: 5rem;
         text-align: center;
     }

@@ -1,4 +1,4 @@
-.small-top-nav {
+.minimal-top-nav {
     width: 100vw;
     height: 12vh;
     display: flex;
@@ -21,7 +21,7 @@
 }
 
 @media only screen and (max-width: 600px){
-    .small-top-nav {
+    .minimal-top-nav {
         padding-left: 3rem;
         
         &__heading {

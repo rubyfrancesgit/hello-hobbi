@@ -15,8 +15,8 @@
 
 @mixin p-text {
     font-family: $text-font;
-    font-weight: lighter;
-    font-size: 1.7rem;
+    font-weight: normal;
+    font-size: 1.5rem;
 }
 
 @mixin light-p-text {
@@ -61,6 +61,7 @@
     cursor: pointer;
     background-color: $light-mist;
     @include p-text;
+    font-weight: lighter;
     color: black !important;
 }
 

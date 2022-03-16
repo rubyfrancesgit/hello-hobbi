@@ -82,12 +82,14 @@
 
     &__text-area {
         @include text-area;
+        font-weight: lighter;
         width: 100%;
         margin-bottom: 2.5rem;
     }
 
     &__text-area::placeholder {
         @include p-text;
+        font-weight: lighter;
         color: black;
         text-align: left;
     }
@@ -128,13 +130,13 @@
         border-radius: 360px;
         object-fit: cover;
         margin-right: 2rem;
-        // border: 1px solid black;
     }
 
     &__visible-file-upload-btn {
         width: 15rem;
         @include button-beginnings;
         @include p-text;
+        font-weight: lighter;
         border: none;
     }
 
@@ -142,6 +144,7 @@
         width: 48%;
         text-align: left;
         @include p-text;
+        font-weight: lighter;
         color: #8A8A8A;
     }
 

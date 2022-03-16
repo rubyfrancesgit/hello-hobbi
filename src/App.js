@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import HostSession from './pages/HostSession';
 import CreateSession from './pages/CreateSession';
 import SignUp from './pages/SignUp';
+import SoapMaking from './pages/SoapMaking';
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -21,6 +22,7 @@ function App() {
               <Route path="/host-a-session" element={<HostSession />} />
               <Route path="/sign-up" element={ !user? <SignUp /> : <Home /> } />
               <Route path="/create-session" element={ user ? <CreateSession /> : <Home /> } />
+              <Route path="/soap-making" element={ <SoapMaking /> } />
           </Routes>
         </BrowserRouter>
       )}

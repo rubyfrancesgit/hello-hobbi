@@ -68,6 +68,13 @@
         padding-bottom: 0px;
     }
 
+    &__light-weight-p {
+        @include p-text;
+        font-weight: lighter;
+        padding-bottom: 1rem;
+        padding-bottom: 0px;
+    }
+
     &__regular-p {
         @include p-text;
         font-weight: normal;
@@ -80,6 +87,7 @@
 
     &__text-area::placeholder {
         @include p-text;
+        font-weight: lighter;
         color: black;
         text-align: left;
     }
@@ -162,6 +170,7 @@
     &__img-upload-btn::-webkit-file-upload-button {
         @include button-beginnings;
         @include p-text;
+        font-weight: lighter;
         border: none;
         padding-left: 12px;
         padding-right: 12px;

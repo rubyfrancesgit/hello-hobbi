@@ -1,17 +1,23 @@
 import React from 'react';
 import TopNav from '../components/TopNav';
 import { Link } from "react-router-dom";
+import { useAuthContext } from '../hooks/useAuthContext';
 
 // style
 import '../sass/style.scss';
 
 // images
 import checkedBox from '../assets/checked-box.svg';
+import Footer from '../components/Footer';
+import SmallTopNav from '../components/SmallTopNav';
 
 function HostSession() {
+
+    const { user } = useAuthContext();
+
     return (
         <>
-            <TopNav />
+            <SmallTopNav />
             <div className="host-session">
                 <div className="host-session__title-div">
                     <h2 className="host-session__title">Host a session</h2>
@@ -42,7 +48,13 @@ function HostSession() {
                             </div>
                         </div>
 
-                        <Link to="/create-session" className="host-session__apply-btn">Apply here!</Link>
+                        {user && (
+                            <Link to="/create-session" className="host-session__apply-btn">Apply here!</Link>
+                        )}
+
+                        {!user && (
+                            <button className="host-session__apply-btn">Login or sign up to apply</button>
+                        )}
                     </div>
                 </div>
 
@@ -50,6 +62,7 @@ function HostSession() {
                     <p className="host-session__contact-p">Not sure if you’re a good fit? Get in contact and we can talk it through with you! Email us at hobbi@gamil.com</p>
                 </div>
             </div>
+            <Footer />
         </>
     )
 }

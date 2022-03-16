@@ -1,0 +1,29 @@
+.footer {
+    width: 100vw;
+    height: 20vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    box-shadow: 0px -1px 5px rgb(207, 207, 207);
+
+    &__p {
+        @include p-text;
+    }
+
+    &__light-p {
+        @include p-text;
+        color: #938D8D;
+        margin-bottom: 1rem;
+    }
+
+    &__social-div {
+        display: flex;
+    }
+
+    &__icon {
+        width: 2.3rem;
+        margin-left: 2rem;
+    }
+}
